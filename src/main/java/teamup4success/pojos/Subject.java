@@ -1,5 +1,6 @@
 package teamup4success.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,7 @@ public class Subject {
 
     String subjectName;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tutor_id")
     Tutor tutor;

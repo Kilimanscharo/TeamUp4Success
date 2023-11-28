@@ -26,6 +26,7 @@ public class Tutor {
     @ElementCollection
     List<String> availableTimes;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "tutor", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     List<Subject> subjectList;
 
