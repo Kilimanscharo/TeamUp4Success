@@ -1,12 +1,10 @@
-package com.example.teamup4success.pojos;
+package teamup4success.pojos;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter

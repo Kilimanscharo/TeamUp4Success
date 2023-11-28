@@ -1,6 +1,6 @@
-package com.example.teamup4success.repository;
+package teamup4success.repository;
 
-import com.example.teamup4success.pojos.Tutor;
+import teamup4success.pojos.Tutor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

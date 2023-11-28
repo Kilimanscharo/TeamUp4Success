@@ -1,7 +1,7 @@
-package com.example.teamup4success.controller;
+package teamup4success.controller;
 
-import com.example.teamup4success.pojos.Tutor;
-import com.example.teamup4success.repository.TutorRepository;
+import teamup4success.pojos.Tutor;
+import teamup4success.repository.TutorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +23,8 @@ public class TutorController {
     }
 
     @GetMapping("/{tutorId}")
-    public Tutor getTutorById(@PathVariable(value = "tutorId") Long tutorId) {
-        return tutorRepository.findById(tutorId).orElse(null);
+    public Tutor getTutorById(@PathVariable(value = "tutorId") long tutorId) {
+        return tutorRepository.findById(tutorId);
     }
 
 }

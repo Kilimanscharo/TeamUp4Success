@@ -1,4 +1,4 @@
-package com.example.teamup4success.pojos;
+package teamup4success.pojos;
 
 import jakarta.persistence.*;
 import lombok.*;

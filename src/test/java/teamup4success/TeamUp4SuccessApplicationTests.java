@@ -1,4 +1,4 @@
-package com.example.teamup4success;
+package teamup4success;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
