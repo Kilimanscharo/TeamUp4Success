@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import teamup4success.pojos.Subject;
 import teamup4success.pojos.Tutor;
 import teamup4success.repository.TutorRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,16 @@ public class TutorController {
                 .status(HttpStatus.CREATED)
                 .location(location)
                 .body(savedTutor);
+    }
+
+    @GetMapping("/{tutorId}/subjects")
+    public List<Subject> getSubjectsByTutor(@PathVariable(value = "tutorId") long tutorId) {
+        Tutor tutor = tutorRepository.findById(tutorId);
+        if (tutor != null) {
+            return tutorRepository.findAllSubjectsByTutor(tutor);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tutor not found");
+        }
     }
 
 }
