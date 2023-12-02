@@ -1,0 +1,22 @@
+###
+GET http://localhost:8080/subjects
+
+###
+POST http://localhost:8080/subjects
+Content-Type: application/json
+
+[
+  {
+    "id": 1,
+    "subjectName": "Mathematics"
+  },
+  {
+    "id": 2,
+    "subjectName": "Physics"
+  },
+  {
+    "id": 3,
+    "subjectName": "Chemistry"
+  }
+]
+

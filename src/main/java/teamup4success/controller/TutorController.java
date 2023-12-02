@@ -8,11 +8,15 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import teamup4success.pojos.Subject;
 import teamup4success.pojos.Tutor;
+import teamup4success.pojos.TutorDTO;
+import teamup4success.repository.SubjectRepository;
 import teamup4success.repository.TutorRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tutors")
@@ -20,6 +24,7 @@ import java.util.List;
 public class TutorController {
 
     private final TutorRepository tutorRepository;
+    private final SubjectRepository subjectRepository;
 
     @GetMapping
     public List<Tutor> getAllTutors() {
@@ -31,32 +36,37 @@ public class TutorController {
         return tutorRepository.findById(tutorId);
     }
 
+
     @PostMapping
-    @Transactional
-    public ResponseEntity<Tutor> addNewTutor(@RequestBody Tutor tutor) {
-        tutor.getSubjectList().forEach(subject -> subject.setTutor(tutor));
+    public ResponseEntity<Tutor> addTutorWithSubjects(@RequestBody TutorDTO tutorDTO) {
+        // Find the subjects by their IDs
+        List<Subject> subjects = subjectRepository.findAllById(tutorDTO.getSubjectIds());
+
+        Tutor tutor = new Tutor();
+        tutor.setFirstname(tutorDTO.getFirstname());
+        tutor.setLastname(tutorDTO.getLastname());
+        tutor.setHourlyRate(tutorDTO.getHourlyRate());
+        tutor.setAvailableTimes(tutorDTO.getAvailableTimes());
+        tutor.setSubjectList(subjects);
+
+        // Save the tutor entity
         Tutor savedTutor = tutorRepository.save(tutor);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedTutor.getId())
-                .toUri();
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .location(location)
-                .body(savedTutor);
+        return new ResponseEntity<>(savedTutor, HttpStatus.CREATED);
     }
 
     @GetMapping("/{tutorId}/subjects")
-    public List<Subject> getSubjectsByTutor(@PathVariable(value = "tutorId") long tutorId) {
+    public ResponseEntity<List<Subject>> getSubjectsByTutor(@PathVariable(value = "tutorId") long tutorId) {
+        // Use the findById method from JpaRepository
         Tutor tutor = tutorRepository.findById(tutorId);
-        if (tutor != null) {
-            return tutorRepository.findAllSubjectsByTutor(tutor);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tutor not found");
+
+        if (tutor == null) {
+            return ResponseEntity.notFound().build();
         }
+
+        List<Subject> subjects = tutor.getSubjectList();
+        return ResponseEntity.ok(subjects);
     }
+
 
 }

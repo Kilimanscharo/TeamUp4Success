@@ -13,15 +13,9 @@ Content-Type: application/json
   "lastname": "Doe",
   "hourlyRate": 50.0,
   "availableTimes": ["Monday 10am-12pm", "Wednesday 2pm-4pm"],
-  "subjectList": [
-    {
-      "subjectName": "Mathematics"
-    },
-    {
-      "subjectName": "Physics"
-    }
-  ]
+  "subjectIds": [1, 2]
 }
+
 
 ###
 GET http://localhost:8080/tutors/1/subjects

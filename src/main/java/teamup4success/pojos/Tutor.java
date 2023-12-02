@@ -1,5 +1,6 @@
 package teamup4success.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -7,8 +8,6 @@ import lombok.experimental.FieldDefaults;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +26,11 @@ public class Tutor {
     List<String> availableTimes;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "tutor", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "tutor_subject",
+            joinColumns = @JoinColumn(name = "tutor_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
     List<Subject> subjectList;
-
 }

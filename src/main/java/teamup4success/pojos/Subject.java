@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Entity
-@Getter
-@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,14 +15,11 @@ import lombok.experimental.FieldDefaults;
 public class Subject {
 
     @Id
-    @GeneratedValue
     Long id;
 
     String subjectName;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "tutor_id")
-    Tutor tutor;
-
+    @ManyToMany(mappedBy = "subjectList")
+    List<Tutor> tutors;
 }

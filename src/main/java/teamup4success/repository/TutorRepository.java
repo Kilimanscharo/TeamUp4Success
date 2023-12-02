@@ -14,7 +14,4 @@ public interface TutorRepository extends JpaRepository<Tutor, Long> {
 
     Tutor findById(long id);
 
-    @Query("SELECT s FROM Subject s WHERE s.tutor = :tutor")
-    List<Subject> findAllSubjectsByTutor(Tutor tutor);
-
 }
