@@ -38,28 +38,20 @@ public class TutorController {
 
 
     @PostMapping
-    public ResponseEntity<Tutor> addTutorWithSubjects(@RequestBody Tutor tutor) {
+    public ResponseEntity<Tutor> addTutorWithSubjects(@RequestBody TutorDTO tutorDTO) {
+        // Find the subjects by their IDs
+        List<Subject> subjects = subjectRepository.findAllById(tutorDTO.getSubjectIds());
 
-        // Extract IDs from the subject list
-        List<Integer> subjectIds = tutor.getSubjectList().stream()
-                .map(Subject::getId)
-                .collect(Collectors.toList());
+        Tutor tutor = new Tutor();
+        tutor.setFirstname(tutorDTO.getFirstname());
+        tutor.setLastname(tutorDTO.getLastname());
+        tutor.setHourlyRate(tutorDTO.getHourlyRate());
+        tutor.setAvailableTimes(tutorDTO.getAvailableTimes());
+        tutor.setSubjectList(subjects);
 
-        // Find the subjects from the database using the extracted IDs
-        List<Subject> subjects = subjectRepository.findAllById(subjectIds);
+        // Save the tutor entity
+        Tutor savedTutor = tutorRepository.save(tutor);
 
-        // Create a new Tutor object and set its properties
-        Tutor newTutor = new Tutor();
-        newTutor.setFirstname(tutor.getFirstname());
-        newTutor.setLastname(tutor.getLastname());
-        newTutor.setHourlyRate(tutor.getHourlyRate());
-        newTutor.setAvailableTimes(tutor.getAvailableTimes());
-        newTutor.setSubjectList(subjects);
-
-        // Save the new Tutor object to the database
-        Tutor savedTutor = tutorRepository.save(newTutor);
-
-        // Return the saved Tutor object in the response
         return new ResponseEntity<>(savedTutor, HttpStatus.CREATED);
     }
 

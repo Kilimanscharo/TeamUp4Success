@@ -14,5 +14,5 @@ public class TutorDTO {
     String lastname;
     Double hourlyRate;
     List<String> availableTimes;
-    List<Long> subjectIds; // This will contain IDs of subjects that tutor can teach
+    List<Integer> subjectIds; // This will contain IDs of subjects that tutor can teach
 }
