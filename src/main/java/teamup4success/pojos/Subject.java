@@ -15,7 +15,7 @@ import java.util.List;
 public class Subject {
 
     @Id
-    Long id;
+    Integer id;
 
     String subjectName;
 

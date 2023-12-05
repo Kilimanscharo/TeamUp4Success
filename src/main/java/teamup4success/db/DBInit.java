@@ -18,13 +18,12 @@ public class DBInit {
     @PostConstruct
     public void testdata() {
         List<Subject> subjects = new ArrayList<>();
-
-        // Hardcoded subjects
-        subjects.add(new Subject(1L, "Physics", null));
-        subjects.add(new Subject(2L, "Mathematics", null));
-        subjects.add(new Subject(3L, "German", null));
-        subjects.add(new Subject(4L, "English", null));
-        subjects.add(new Subject(5L, "History", null));
+        
+        subjects.add(new Subject(1, "Physics", null));
+        subjects.add(new Subject(2, "Mathematics", null));
+        subjects.add(new Subject(3, "German", null));
+        subjects.add(new Subject(4, "English", null));
+        subjects.add(new Subject(5, "History", null));
         subRepo.saveAll(subjects);
     }
 }
